@@ -1,6 +1,7 @@
 package com.byox.drawviewproject;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,12 +15,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byox.drawview.enums.BackgroundScale;
@@ -33,13 +38,19 @@ import com.byox.drawviewproject.dialogs.RequestTextDialog;
 import com.byox.drawviewproject.dialogs.SaveBitmapDialog;
 import com.byox.drawviewproject.dialogs.SelectChoiceDialog;
 import com.byox.drawviewproject.dialogs.SelectImageDialog;
-import com.byox.drawviewproject.utils.AnimateUtils;
+import com.byox.drawviewproject.dialogs.StrokeDialog;
+import com.byox.drawviewproject.utils.adapter.AdapterCallback;
+import com.byox.drawviewproject.utils.adapter.AdapterHorizontalList;
+import com.byox.drawviewproject.utils.adapter.AdapterVerticalList;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     // CONSTANTS
     private final int STORAGE_PERMISSIONS = 1000;
@@ -56,18 +67,92 @@ public class MainActivity extends AppCompatActivity {
 
     // ADS
     private NativeExpressAdView mAdView;
+    //text view
+    private TextView pen, line, rectangle, ellipse, arrow, eraser;
+    //recycler view
+    private RecyclerView verticalList, horizontalList;
+    private List<AdapterVerticalList.AdapterVericalListModel> adapterVericalListModelList;
+    private AdapterVerticalList adapterVerticalList;
+    private List<AdapterHorizontalList.AdapterHorizontalListModel> adapterHorizontalListModelList;
+    private AdapterHorizontalList adapterHorizontalList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setAdapters();
         mFabClearDraw = (FloatingActionButton) findViewById(R.id.fab_clear);
 
         setupToolbar();
         setupDrawView();
         setListeners();
         setupADS();
+    }
+
+    @SuppressLint("WrongViewCast")
+    private void setAdapters() {
+        verticalList = (RecyclerView) findViewById(R.id.pen);
+        horizontalList = (RecyclerView) findViewById(R.id.horizontal);
+
+        adapterVericalListModelList = new ArrayList<>();
+        adapterHorizontalListModelList = new ArrayList<>();
+
+        AdapterVerticalList.AdapterVericalListModel adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Pen");
+        adapterVericalListModel.setSelected(true);
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Line");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Rectangle");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Ellipse");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Arrow");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Eraser");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVericalListModel = new AdapterVerticalList.AdapterVericalListModel();
+        adapterVericalListModel.setName("Select");
+        adapterVericalListModelList.add(adapterVericalListModel);
+        adapterVerticalList = new AdapterVerticalList(this, adapterVericalListModelList, this);
+        RecyclerView.LayoutManager mLayoutManager4 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        verticalList.setLayoutManager(mLayoutManager4);
+        verticalList.setItemAnimator(new DefaultItemAnimator());
+        verticalList.setAdapter(adapterVerticalList);
+
+        AdapterHorizontalList.AdapterHorizontalListModel adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Undo");
+        adapterHorizontalListModel.setSelected(true);
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Redo");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Clear");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Color");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("BG Color");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Stroke");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalListModel = new AdapterHorizontalList.AdapterHorizontalListModel();
+        adapterHorizontalListModel.setName("Image Upload");
+        adapterHorizontalListModelList.add(adapterHorizontalListModel);
+        adapterHorizontalList = new AdapterHorizontalList(this, adapterHorizontalListModelList, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        horizontalList.setLayoutManager(mLayoutManager);
+        horizontalList.setItemAnimator(new DefaultItemAnimator());
+        horizontalList.setAdapter(adapterHorizontalList);
     }
 
     @Override
@@ -100,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(1);
                 break;
             case R.id.action_draw_tool:
-                changeDrawTool();
+//                changeDrawTool();
                 break;
             case R.id.action_draw_mode:
                 changeDrawMode();
@@ -180,16 +265,16 @@ public class MainActivity extends AppCompatActivity {
             public void onEndDrawing() {
                 canUndoRedo();
 
-                if (mFabClearDraw.getVisibility() == View.INVISIBLE)
-                    AnimateUtils.ScaleInAnimation(mFabClearDraw, 50, 300, new OvershootInterpolator(), true);
+//                if (mFabClearDraw.getVisibility() == View.INVISIBLE)
+//                    AnimateUtils.ScaleInAnimation(mFabClearDraw, 50, 300, new OvershootInterpolator(), true);
             }
 
             @Override
             public void onClearDrawing() {
                 canUndoRedo();
 
-                if (mFabClearDraw.getVisibility() == View.VISIBLE)
-                    AnimateUtils.ScaleOutAnimation(mFabClearDraw, 50, 300, new OvershootInterpolator(), true);
+//                if (mFabClearDraw.getVisibility() == View.VISIBLE)
+//                    AnimateUtils.ScaleOutAnimation(mFabClearDraw, 50, 300, new OvershootInterpolator(), true);
             }
 
             @Override
@@ -216,8 +301,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         canUndoRedo();
-                        if (!mDrawView.isDrawViewEmpty())
-                            mFabClearDraw.setVisibility(View.VISIBLE);
+//                        if (!mDrawView.isDrawViewEmpty())
+//                            mFabClearDraw.setVisibility(View.VISIBLE);
                     }
                 }, 300);
             }
@@ -380,6 +465,147 @@ public class MainActivity extends AppCompatActivity {
                 saveDraw();
             else if (option == 1)
                 chooseBackgroundImage();
+        }
+    }
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public void onVerticalListItemClick(int pos) {
+        for (int i = 0; i < adapterVericalListModelList.size(); i++) {
+            adapterVericalListModelList.get(i).setSelected(i == pos);
+        }
+        adapterVerticalList.notifyDataSetChanged();
+        try {
+            mDrawView.setDrawingMode(DrawingMode.DRAW);
+            switch (adapterVericalListModelList.get(pos).getName()) {
+                case "Pen":
+                    mDrawView.setDrawingTool(DrawingTool.PEN);
+                    break;
+                case "Line":
+                    mDrawView.setDrawingTool(DrawingTool.LINE);
+                    break;
+                case "Rectangle":
+                    mDrawView.setDrawingTool(DrawingTool.RECTANGLE);
+                    break;
+                case "Ellipse":
+                    mDrawView.setDrawingTool(DrawingTool.ELLIPSE);
+                    break;
+                case "Arrow":
+                    mDrawView.setDrawingTool(DrawingTool.ARROW);
+                    break;
+                case "Eraser":
+                    mDrawView.setDrawingMode(DrawingMode.ERASER);
+                    break;
+                case "Select":
+                    mDrawView.setDrawingMode(DrawingMode.SELECT);
+                    break;
+                default:
+            }
+        } catch (Exception e) {
+            Log.e("Clicking on Vertical list item", e.getMessage());
+        }
+    }
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public void onHorizontalListItemClick(int pos) {
+        for (int i = 0; i < adapterHorizontalListModelList.size(); i++) {
+            adapterHorizontalListModelList.get(i).setSelected(i == pos);
+        }
+        adapterHorizontalList.notifyDataSetChanged();
+        try {
+            mDrawView.setDrawingMode(DrawingMode.DRAW);
+            switch (adapterHorizontalListModelList.get(pos).getName()) {
+                case "Undo":
+                    if (mDrawView.canUndo()) {
+                        mDrawView.undo();
+                        canUndoRedo();
+                    }
+                    break;
+                case "Redo":
+                    if (mDrawView.canRedo()) {
+                        mDrawView.redo();
+                        canUndoRedo();
+                    }
+                    break;
+                case "Clear":
+                    mDrawView.clearHistory();
+                    break;
+                case "Color":
+                    DrawAttribsDialog drawAttribsDialog = DrawAttribsDialog.newInstance();
+                    drawAttribsDialog.setPaint(mDrawView.getCurrentPaintParams());
+                    drawAttribsDialog.setOnCustomViewDialogListener(new DrawAttribsDialog.OnCustomViewDialogListener() {
+                        @Override
+                        public void onRefreshPaint(Paint newPaint) {
+                            mDrawView.setDrawColor(newPaint.getColor())
+//                                    .setPaintStyle(newPaint.getStyle())
+//                                    .setDither(newPaint.isDither())
+//                                    .setDrawWidth((int) newPaint.getStrokeWidth())
+//                                    .setDrawAlpha(newPaint.getAlpha())
+//                                    .setAntiAlias(newPaint.isAntiAlias())
+//                                    .setLineCap(newPaint.getStrokeCap())
+//                                    .setFontFamily(newPaint.getTypeface())
+//                                    .setFontSize(newPaint.getTextSize())
+                            ;
+//                If you prefer, you can easily refresh new attributes using this method
+//                mDrawView.refreshAttributes(newPaint);
+                        }
+                    });
+                    drawAttribsDialog.show(getSupportFragmentManager(), "drawAttribs");
+                    break;
+                case "BG Color":
+                    DrawAttribsDialog drawAttribsDialog1 = DrawAttribsDialog.newInstance();
+                    drawAttribsDialog1.setPaint(mDrawView.getCurrentPaintParams());
+                    drawAttribsDialog1.setOnCustomViewDialogListener(new DrawAttribsDialog.OnCustomViewDialogListener() {
+                        @Override
+                        public void onRefreshPaint(Paint newPaint) {
+                            mDrawView.setBackgroundColor(newPaint.getColor());
+//                                    .setDrawColor(newPaint.getColor())
+//                                    .setPaintStyle(newPaint.getStyle())
+//                                    .setDither(newPaint.isDither())
+//                                    .setDrawWidth((int) newPaint.getStrokeWidth())
+//                                    .setDrawAlpha(newPaint.getAlpha())
+//                                    .setAntiAlias(newPaint.isAntiAlias())
+//                                    .setLineCap(newPaint.getStrokeCap())
+//                                    .setFontFamily(newPaint.getTypeface())
+//                                    .setFontSize(newPaint.getTextSize())
+                            ;
+//                If you prefer, you can easily refresh new attributes using this method
+//                mDrawView.refreshAttributes(newPaint);
+                        }
+                    });
+                    drawAttribsDialog1.show(getSupportFragmentManager(), "drawAttribs");
+                    break;
+                case "Stroke":
+                    StrokeDialog strokeDialog = StrokeDialog.newInstance();
+                    strokeDialog.setPaint(mDrawView.getCurrentPaintParams());
+                    strokeDialog.setOnCustomViewDialogListener(new StrokeDialog.OnCustomViewDialogListener() {
+                        @Override
+                        public void onRefreshPaint(Paint newPaint) {
+                            mDrawView
+//                                    .setDrawColor(newPaint.getColor())
+//                                    .setPaintStyle(newPaint.getStyle())
+//                                    .setDither(newPaint.isDither())
+                                    .setDrawWidth((int) newPaint.getStrokeWidth())
+//                                    .setDrawAlpha(newPaint.getAlpha())
+//                                    .setAntiAlias(newPaint.isAntiAlias())
+//                                    .setLineCap(newPaint.getStrokeCap())
+//                                    .setFontFamily(newPaint.getTypeface())
+//                                    .setFontSize(newPaint.getTextSize())
+                            ;
+//                If you prefer, you can easily refresh new attributes using this method
+//                mDrawView.refreshAttributes(newPaint);
+                        }
+                    });
+                    strokeDialog.show(getSupportFragmentManager(), "strokedialog");
+                    break;
+                case "Image Upload":
+//                    DrawMove.newInstance();
+                    break;
+                default:
+            }
+        } catch (Exception e) {
+            Log.e("Clicking on Horizontal list item", e.getMessage());
         }
     }
 }

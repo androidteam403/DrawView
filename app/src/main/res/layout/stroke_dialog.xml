@@ -123,7 +123,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
-            android:visibility="gone"
             android:text="@string/stroke_width"
             android:textStyle="bold" />
 
@@ -134,7 +133,6 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:max="56"
-            android:visibility="gone"
             android:padding="12dp" />
 
         <TextView
@@ -143,7 +141,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
-            android:visibility="gone"
             android:text="@string/opacity"
             android:textStyle="bold" />
 
@@ -154,7 +151,6 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:max="255"
-            android:visibility="gone"
             android:padding="12dp" />
 
         <TextView
@@ -163,7 +159,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
-            android:visibility="gone"
             android:text="@string/font_size"
             android:textStyle="bold" />
 
@@ -174,14 +169,12 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:max="128"
-            android:visibility="gone"
             android:padding="12dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -208,7 +201,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
-            android:visibility="gone"
             android:text="Paint style"
             android:textStyle="bold" />
 
@@ -216,7 +208,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatRadioButton
@@ -253,14 +244,12 @@
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
             android:text="Paint cap"
-            android:visibility="gone"
             android:textStyle="bold" />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatRadioButton
@@ -296,7 +285,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="12dp"
-            android:visibility="gone"
             android:text="Paint typeface"
             android:textStyle="bold" />
 
@@ -304,7 +292,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatRadioButton

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "909598359092",
+    "firebase_url": "https://nurokids-fde3a.firebaseio.com",
+    "project_id": "nurokids-fde3a",
+    "storage_bucket": "nurokids-fde3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909598359092:android:5b217dad74c1b97b679461",
+        "android_client_info": {
+          "package_name": "com.thresholdsoft.canvas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "909598359092-fqbrb6kbct1lp61d6ghh6ni5ravfslca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thresholdsoft.canvas",
+            "certificate_hash": "71ce1d37748f967ce2c5f368189d6afca02be614"
+          }
+        },
+        {
+          "client_id": "909598359092-2i69a3gnsb0h02050vlh3ltobt5mlact.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGVrXWO477f6BpBA52SBXx12ZQYXTaGcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "909598359092-2i69a3gnsb0h02050vlh3ltobt5mlact.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

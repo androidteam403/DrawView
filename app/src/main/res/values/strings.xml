@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrawView Library</string>
+    <string name="app_name">Canvas</string>
 
     <string name="stroke_width">Stroke width: %1$d</string>
     <string name="opacity">Opacity: %1$d</string>

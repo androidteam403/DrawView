@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
@@ -13,7 +13,9 @@
         android:id="@+id/draw_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="50dp"
         app:dv_draw_alpha="255"
         app:dv_draw_anti_alias="true"
         app:dv_draw_color="@color/colorAccent"
@@ -29,14 +31,175 @@
         app:dv_draw_width="4"
         app:dv_draw_zoomregion_maxscale="5"
         app:dv_draw_zoomregion_minscale="2"
-        app:dv_draw_zoomregion_scale="4"/>
+        app:dv_draw_zoomregion_scale="4" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/pen"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Pen"-->
+    <!--            android:textColor="@color/blue" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/line"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Line"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/rectangle"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Rectangle"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/circle"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Circle"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:visibility="gone" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/ellipse"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Ellipse"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/arrow"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Arrow"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/quadratic_bezier"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Qubic bezier"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:visibility="gone" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/qubic_bezier"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Qubic bezier"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:visibility="gone" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/Eraser"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Eraser"-->
+    <!--            android:textColor="@color/black" />-->
+
+
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/undo"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Undo"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/redo"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Redo"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/clear"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Clear"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/color"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Color"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:visibility="gone" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/bg_color"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Ellipse"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/stroke"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Stroke"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/image_upload"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Image Upload"-->
+    <!--            android:textColor="@color/black" />-->
+
+
+    <!--    </LinearLayout>-->
 
     <com.google.android.gms.ads.NativeExpressAdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"
         app:adSize="360x80"
         app:adUnitId="@string/banner_ad_unit_id" />
 
-</FrameLayout>
+</RelativeLayout>

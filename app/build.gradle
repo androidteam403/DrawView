@@ -1,10 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    dataBinding {
+        enabled = true
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "com.byox.drawviewproject"
+        applicationId "com.thresholdsoft.canvas"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 11
@@ -36,8 +39,6 @@ dependencies {
     compile 'com.ch4vi.flowlayoutmanager:flowlayoutmanager:1.0.2'
     testCompile 'junit:junit:4.12'
 }
-
-
 
 
 apply plugin: 'com.google.gms.google-services'
